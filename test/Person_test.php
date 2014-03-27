@@ -1,7 +1,6 @@
 <?php
 
 include_once( "../boot.php" );
-include_once( MODEL . "Person.php" );
 
 $p = new Person();
 $p->id = 2;
@@ -12,7 +11,7 @@ echo( "<br>" );
 var_dump( $p->__toArray() );
 
 /*
- * Person.test.php
+ * Person_test.php
  * 
  * Copyright 2014 Luís Puhl <luis@bolsista> at UNESP
  * 

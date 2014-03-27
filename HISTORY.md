@@ -29,3 +29,14 @@ Criado o repositório git, publicando esta consolidação para o gitHub;
 
 
 ================================================================================
+Class Autoload foi posto para funcionar, de acordo com a hierarquia do projeto;
+
+HG está corrompido, Field.php foi sobreescrito em Person.test.php ao invez de Person_test.php;
+
+Posto em funcionamento o autoload para todo o projeto;
+
+Adicionado uma anotação, ainda sem uso;
+
+Centralizado os parâmetros de conexão;
+
+Melhorado a integridade e foco no objetivo do Model.php;

@@ -22,6 +22,7 @@ class MysqlConnection{
 				"server" => "localhost",
 				"user" => "test",
 				"pwd" => "test",
+				"database" => "test",
 			),
 		);
 		

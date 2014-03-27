@@ -1,46 +1,19 @@
 <?php
 
-include_once( "../boot.php");
-
-class Person extends Model {
+/**
+ * Description of Field
+ *
+ * @author luis
+ *
+ * @Target("property") 
+ */
+class Field extends Annotation {
 	
-	// @Field
-	public $name;
-	// @Field
-	public $name_last;
-	
-	
-	protected function getSelectSQL( $params = array() ){
-		$sql = <<<sql
-
-SELECT
-	`person`.`id`,
-	`person`.`name`,
-	`person`.`name_last`
-FROM 
-	`test`.`person`
-WHERE
-	`person`.`id` = :Pid
-;
-
-
-sql;
-		
-		return $sql;
-	}
-	
-	
-	/*
-	 * TODO criar um método estático que recupere todos os registros, 
-	 * devidamente armazenados em objetos desta classe.
-	 * 
-	 * <next> Generalizar no Model;
-	 */
 	
 }
 
 /*
- * Person.php
+ * Field.php
  * 
  * Copyright 2014 Luís Puhl <luis@bolsista> at UNESP
  * 
@@ -72,3 +45,4 @@ sql;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
+

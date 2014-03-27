@@ -1,21 +1,17 @@
 <?php
 
-include_once( UTIL . "MysqlConnection.php" );
-
 abstract class Model{
 	
+	// @Field
 	public $id;
+	
 	private $config = array(
 		"pdo" => null,
-		"mysql" => array(
-			"server_name" => "localhost",
-			"user" => "test",
-			"pwd" => "test",
-			"database" => "test",
-		)
 	);
 	
-	abstract function getSelectSQL( $params = array() );
+	/* ---------------------------------------------------------------------- */
+	
+	abstract protected function getSelectSQL( $params = array() );
 	public function load(){
 		$pdo = $this->getPdo();
 		
@@ -31,10 +27,12 @@ abstract class Model{
 		return true;
 	}
 	
+	/* ---------------------------------------------------------------------- */
+	
 	public function getPdo(){
 		if ( !$this->config["pdo"] ){
-			$pdo = new MysqlConnection( $this->config["mysql"] );
-			//~ $pdo = new MysqlConnection(  );
+			//~ $pdo = new MysqlConnection( $this->config["mysql"] );
+			$pdo = new MysqlConnection(  );
 			$this->config["pdo"] = $pdo;
 		}
 		return $this->config["pdo"];
@@ -67,6 +65,7 @@ abstract class Model{
 		
 		return $text;
 	}
+	
 	
 	
 }
