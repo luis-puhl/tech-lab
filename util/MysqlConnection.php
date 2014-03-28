@@ -48,12 +48,24 @@ class MysqlConnection{
 		"pwd" => "",
 		"database" => "",
 	);
+	
+	
+	/**
+	 * 
+	 * @throws ErrorException se não existe classe 'PDO' disponível.
+	 * @throws PDOException se não consegue conectar ao banco de dados.
+	 * @param configConstructor Configurações de conexão 
+	 * 			(completadas automaticamente)
+	 */
 	public function __construct ( $configConstructor = array() ){
 		
 		// se PHP Data Objects não estiver instalado
 		if (!class_exists("PDO")){
-			throw new ErrorException("Não é possível conectar: " . 
-					"Não existe classe 'PDO' disponível.", 99, 99);
+			
+			$msg = "Não é possível conectar: ";
+			$msg .= "Não existe classe 'PDO' disponível.";
+			
+			throw new ErrorException( $msg, 99, 99 );
 		}
 		
 		$server = self::corectDatabase();
@@ -66,31 +78,26 @@ class MysqlConnection{
 		} else {
 			
 			switch ("") {
-				case $configConstructor["server_name"]:{
+				case $configConstructor["server_name"]:
 					$configConstructor["server_name"] = $server['server'];
 					break;
-				}
-				case $configConstructor["user"]:{
+				case $configConstructor["user"]:
 					$configConstructor["user"] = $server['user'];
 					break;
-				}
-				case $configConstructor["pwd"]:{
+				case $configConstructor["pwd"]:
 					$configConstructor["pwd"] = $server['pwd'];
 					break;
-				}
-				case $configConstructor["database"]:{
+				case $configConstructor["database"]:
 					$configConstructor["database"] = $server['database'];
 					break;
-				}
 			}
-			
 		}
 		
 		try {
 			$opt = array(
-					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-					PDO::ATTR_EMULATE_PREPARES => FALSE,
-				);
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_EMULATE_PREPARES => FALSE,
+			);
 			$this->pdo = new PDO(
 					"mysql:host=".$configConstructor["server_name"]
 						.";dbname=".$configConstructor["database"],
@@ -105,13 +112,19 @@ class MysqlConnection{
 		
 	}
 	
+	/**
+	 * 
+	 * @throws PDOException para erros de preparação e recuperação 
+	 * 		(pdo->prepare e pdo->execute)
+	 */
 	public function pdoPrepareExecute( $sql, $param, $debug = false ){
 		$query = $this->pdo->prepare($sql);
 		
 		if ($query == false) {
-			throw new Exception(
-				"Não foi possivel preparar a consulta ao banco de dados. "
-				."(" . $pdo->errorCode() . ") " . $pdo->errorInfo());
+			$msg = "Não foi possivel preparar a consulta ao banco de dados.";
+			$msg .= " (" . $this->pdo->errorCode() . ") ";
+			$msg .= $this->pdo->errorInfo();
+			throw new PDOException( $msg );
 		}
 		
 		$sucess = $query->execute( $param );
@@ -121,9 +134,10 @@ class MysqlConnection{
 		}
 		
 		if ($sucess != true) {
-			throw new PDOException(
-				"Não foi possivel consultar o banco de dados. "
-				."(" . $this->pdo->errorCode() . ") " . $this->pdo->errorInfo());
+			$msg = "Não foi possivel consultar o banco de dados.";
+			$msg .= " (" . $this->pdo->errorCode() . ") ";
+			$msg .= $this->pdo->errorInfo();
+			throw new PDOException( $msg );
 		}
 		
 		return $query;
@@ -147,6 +161,10 @@ class MysqlConnection{
 		}
 		
 		return $registros;
+	}
+	
+	public function getPdo(){
+		return $this->pdo;
 	}
 	
 }

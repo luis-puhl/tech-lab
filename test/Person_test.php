@@ -6,9 +6,27 @@ $p = new Person();
 $p->id = 2;
 $p->load();
 echo( $p );
-echo( "<br>" );
+echo( "\n<br>\n" );
+
+
+echo( "getFields()" );
+$p->getFields();
+
+echo( "\n<br>\n" );
 
 var_dump( $p->__toArray() );
+
+echo( "\n<br>\n" );
+echo( "loadAll" );
+
+$p_a = new Person();
+$p_a = $p_a->loadAll();
+echo( "\n<br>\n" );
+var_dump( $p_a );
+echo( "<br>" );
+
+
+
 
 /*
  * Person_test.php

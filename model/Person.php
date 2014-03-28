@@ -9,20 +9,27 @@ class Person extends Model {
 	// @Field
 	public $name_last;
 	
-	
-	protected function getSelectSQL( $params = array() ){
+	protected function getSelectSQL( $SQLparams = array() ){
 		$sql = <<<sql
-
 SELECT
 	`person`.`id`,
 	`person`.`name`,
 	`person`.`name_last`
 FROM 
 	`test`.`person`
-WHERE
-	`person`.`id` = :Pid
-;
 
+sql;
+		
+		return $sql;
+	}
+	
+	protected function getSelectShortSQL( $SQLparams = array() ){
+				$sql = <<<sql
+SELECT
+	`person`.`id`,
+	`person`.`name`
+FROM 
+	`test`.`person`
 
 sql;
 		
@@ -30,12 +37,6 @@ sql;
 	}
 	
 	
-	/*
-	 * TODO criar um método estático que recupere todos os registros, 
-	 * devidamente armazenados em objetos desta classe.
-	 * 
-	 * <next> Generalizar no Model;
-	 */
 	
 }
 

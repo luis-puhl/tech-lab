@@ -9,13 +9,73 @@ abstract class Model{
 		"pdo" => null,
 	);
 	
-	/* ---------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------- */
 	
-	abstract protected function getSelectSQL( $params = array() );
-	public function load(){
+	/*
+	 * Estes métodos definem qual sql será executada atravéz dos métodos como 
+	 * load() e loadAll()
+	 */
+	/**
+	 * Gera uma string de SQL para ser usada pelo model.
+	 * <p>
+	 * 
+	 * Gera uma string de consulta SQL com base em SQLparams para ser utilizada 
+	 * no model para recuperar um ou mais registros do banco de dados.
+	 * <p>
+	 * 
+	 * Deve conter uma clausula SELECT, uma FROM. Não deve ter clausula WHERE.
+	 * 
+	 *
+	 * @param  SQLparams Parametros para construir as clausulas SELECT e FROM
+	 * @return String com a consulta SQL.
+	 */
+	abstract protected function getSelectSQL( $SQLparams = array() );
+	
+	/**
+	 * Gera uma string de SQL para ser usada pelo model com o mínimo de campos.
+	 * <p>
+	 *
+	 * Gera uma string de consulta SQL com base em SQLparams para ser utilizada 
+	 * no model para recuperar um ou mais registros do banco de dados.
+	 * <p>
+	 * 
+	 * Deve conter uma clausula SELECT, uma FROM. Não deve ter clausula WHERE.
+	 * <p>
+	 * 
+	 * Deve ter o mínimo possível de campos formando uma consulta leve;
+	 * 
+	 * @param  SQLparams Parametros para construir as clausulas SELECT e FROM
+	 * @return String com a consulta SQL.
+	 */
+	abstract protected function getSelectShortSQL( $SQLparams = array() );
+	
+	
+	/**
+	 * Carrega do banco o registro com id igual à propriedade id deste objeto.
+	 * <p>
+	 *
+	 * Gera uma string de consulta SQL com getSelectSQL e carrega os dados das
+	 * colunas recuperadas nos campos públicos do objeto sendo que o id do 
+	 * objeto seja igual ao id do regitro.
+	 * <p>
+	 * 
+	 * Cria uma clausula WHERE com obj.id = :Pid e parametros Pid = this->id.
+	 * <p>
+	 * 
+	 * @param  SQLparams Parametros para construir as clausulas SELECT e FROM
+	 * @throws ErrorException se não existe classe 'PDO' disponível.
+	 * @throws PDOException
+	 * @return true.
+	 */
+	public function load( $SQLparams = array() ){
 		$pdo = $this->getPdo();
 		
-		$sql = $this->getSelectSQL();
+		$sql = $this->getSelectSQL( $SQLparams );
+		$sql .= "
+WHERE
+	`person`.`id` = :Pid
+;";
+		
 		$param = array( "Pid" => $this->id );
 		echo "<br>\nsql" . $sql . "\n<br>";
 		
@@ -27,11 +87,57 @@ abstract class Model{
 		return true;
 	}
 	
-	/* ---------------------------------------------------------------------- */
+	/**
+	 * Carrega do banco o todos registros.
+	 * <p>
+	 *
+	 * Gera uma string de consulta SQL com getSelectSQL e carrega os dados das
+	 * colunas recuperadas nos campos públicos dos objetos sendo que o id do 
+	 * objeto seja igual ao id do regitro.
+	 * <p>
+	 * 
+	 * 
+	 * @param  SQLparams Parametros para construir as clausulas SELECT e FROM
+	 * @throws ErrorException se não existe classe 'PDO' disponível.
+	 * @throws PDOException
+	 * @return array Of ModelType.
+	 */
+	public function loadAll( $SQLparams = array() ){
+		$pdo = $this->getPdo()->getPdo();
+		
+		$sql = $this->getSelectShortSQL( $SQLparams );
+		$sql .= ";";
+		$param = array(  );
+		echo "<br>\nsql" . $sql . "\n<br>";
+		
+		$query = $pdo->prepare( $sql );
+		
+		if ($query == false) {
+			throw new Exception(
+				"Não foi possivel preparar a consulta ao banco de dados. "
+				."(" . $pdo->errorCode() . ") " . $pdo->errorInfo() );
+		}
+		
+		$stm = $query->execute( $param );
+		
+		if ($stm != true) {
+			throw new PDOException(
+				"Não foi possivel consultar o banco de dados. "
+				."(" . $pdo->errorCode() . ") " . $pdo->errorInfo() );
+		}
+		
+		$query->setFetchMode( PDO::FETCH_CLASS , get_class($this) );
+		return $query->fetchAll( PDO::FETCH_CLASS );
+	}
 	
+	/* -------------------------------------------------------------------- */
+	
+	/**
+	 * @throws ErrorException se não existe classe 'PDO' disponível.
+	 * @throws PDOException se não consegue conectar ao banco de dados.
+	 */
 	public function getPdo(){
 		if ( !$this->config["pdo"] ){
-			//~ $pdo = new MysqlConnection( $this->config["mysql"] );
 			$pdo = new MysqlConnection(  );
 			$this->config["pdo"] = $pdo;
 		}
@@ -42,7 +148,24 @@ abstract class Model{
 		return $this;
 	}
 	
-	/* ---------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------- */
+	
+	public function getFields(){
+		$arr =  array();
+		
+		$reflector = new ReflectionClass( $this );
+		$props = $reflector->getProperties( ReflectionProperty::IS_PUBLIC );
+		
+		foreach ($props as $prop){
+			$fieldReflection = new ReflectionAnnotatedProperty( 
+					$this, $prop->getName() );
+			
+			if ( $fieldReflection->hasAnnotation("Field") ){
+				$arr[ $prop->getName() ] = $prop->getValue() ;
+			}
+		}
+		return $arr;
+	}
 	
 	public function __toArray(){
 		$reflector = new ReflectionClass( $this );
