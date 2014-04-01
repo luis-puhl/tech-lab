@@ -52,9 +52,13 @@ Começo da documentação do Model;
 
 Adicionado ao model, filtragem por annotation de campo (Field);
 
-
+01.04.2014 15:00:00
 ==============================================================================
 Modificado o campo e-mail da licesa em cada arquivo;
+
+01.04.2014 15:05:16
+==============================================================================
+Adicionado config.php, para centralizar a configuração de conexão com o banco;
 
 
 
