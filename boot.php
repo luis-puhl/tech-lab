@@ -15,6 +15,9 @@ define( "TEST", ROOT . "util/" );
 // A MAGNÍFICA BIBLIOTECA DE ANOTAÇÕES
 include_once( LIB . "addendum/annotations.php" );
 
+// carrega configurações
+include_once( UTIL . "config.php" );
+
 
 function __autoload($className) {
 	
