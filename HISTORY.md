@@ -53,5 +53,8 @@ Começo da documentação do Model;
 Adicionado ao model, filtragem por annotation de campo (Field);
 
 
+==============================================================================
+Modificado o campo e-mail da licesa em cada arquivo;
+
 
 
