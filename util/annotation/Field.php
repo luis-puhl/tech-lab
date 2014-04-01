@@ -15,7 +15,7 @@ class Field extends Annotation {
 /*
  * Field.php
  * 
- * Copyright 2014 Luís Puhl <luis@bolsista> at UNESP
+ * Copyright 2014 Luís Puhl <luispuhl@gmail.com> at UNESP
  * 
  *
  * Redistribution and use in source and binary forms, with or without

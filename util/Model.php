@@ -49,6 +49,16 @@ abstract class Model{
 	 */
 	abstract protected function getSelectShortSQL( $SQLparams = array() );
 	
+	/**
+	 * Gera uma string de SQL para ser anexada em consultas com SELECT
+	 * <p>
+	 *
+	 * Cria um WHERE para complementar as SQL geradas pelos outros métodos.
+	 * 
+	 * @param  SQLparams Parametros para construir as clausulas SELECT e FROM
+	 * @return String com o trecho SQL - WHERE.
+	 */
+	abstract protected function getWhere( $SQLparams = array() );
 	
 	/**
 	 * Carrega do banco o registro com id igual à propriedade id deste objeto.
@@ -71,10 +81,7 @@ abstract class Model{
 		$pdo = $this->getPdo();
 		
 		$sql = $this->getSelectSQL( $SQLparams );
-		$sql .= "
-WHERE
-	`person`.`id` = :Pid
-;";
+		$sql .= $this->getWhere( $SQLparams );
 		
 		$param = array( "Pid" => $this->id );
 		echo "<br>\nsql" . $sql . "\n<br>";
@@ -161,7 +168,7 @@ WHERE
 					$this, $prop->getName() );
 			
 			if ( $fieldReflection->hasAnnotation("Field") ){
-				$arr[ $prop->getName() ] = $prop->getValue() ;
+				$arr[ $prop->getName() ] = $prop->getValue( $this ) ;
 			}
 		}
 		return $arr;

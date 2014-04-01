@@ -1,13 +1,17 @@
 <?php
 
-include_once( "../boot.php");
+//~ include_once( "../boot.php");
 
 class Person extends Model {
 	
-	// @Field
+	/** @Field */
 	public $name;
-	// @Field
+	/** @Field */
 	public $name_last;
+	
+	
+	public $table;
+	
 	
 	protected function getSelectSQL( $SQLparams = array() ){
 		$sql = <<<sql
@@ -24,7 +28,7 @@ sql;
 	}
 	
 	protected function getSelectShortSQL( $SQLparams = array() ){
-				$sql = <<<sql
+		$sql = <<<sql
 SELECT
 	`person`.`id`,
 	`person`.`name`
@@ -37,6 +41,18 @@ sql;
 	}
 	
 	
+	protected function getWhere( $SQLparams = array() ){
+		$sql = <<<sql
+WHERE
+	`person`.`id` = :Pid
+sql;
+		
+		return $sql;
+	}
+	
+	function __construct(){
+		$this->table = "test";
+	}
 	
 }
 
