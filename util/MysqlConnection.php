@@ -16,7 +16,8 @@ class MysqlConnection{
 	 * 
 	 */
 	public static function corectDatabase(){
-		$maquinaBanco = global $databaseServerBind;
+		global $databaseServerBind;
+		$maquinaBanco = $databaseServerBind;
 		
 		// método para diferenciar máquinas linux
 		$idMaquina = trim(shell_exec ("hostid"));
