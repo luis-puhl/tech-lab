@@ -1,16 +1,21 @@
 <?php
 
 define( "ROOT", dirname(__FILE__) . "/" );
+define( "WEB_ROOT", "/" );
 
 // bibliotecas, pouca modificação com o tempo
 define( "LIB", ROOT . "lib/" );
+
 // este framework
 define( "UTIL", ROOT . "util/" );
 define( "ANNOTATION", UTIL . "annotation/" );
+define( "IMG", ROOT . "images/" );
+define( "ERROR_PAGE_403", UTIL . "403.php" );
 
 // coisas que devem ser alteradas com mais frequencia
 define( "MODEL", ROOT . "model/" );
 define( "TEST", ROOT . "util/" );
+
 
 // A MAGNÍFICA BIBLIOTECA DE ANOTAÇÕES
 include_once( LIB . "addendum/annotations.php" );
