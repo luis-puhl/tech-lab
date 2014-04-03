@@ -1,0 +1,8 @@
+A intensão é construir um sistema que seja de acesso publico (desing 
+orientado ao papel - Role Driven design).
+
+Ou seja, um usuário qualquer da web, sem ser identificado, pode acessar os 
+serviços do sistema. 
+
+A generalização pela centralização na ideia de que o papel do usuário é o 
+que define a funcionalidade do sistema.
