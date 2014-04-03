@@ -2,7 +2,20 @@
 
 abstract class Model{
 	
-	// @Field
+	/**
+	 * Dilema da semama: 
+	 * 		Usar ANNOTATION?
+	 * 		Se sim, como usar?
+	 * 
+	 * Estou chegando a conclusão que evitar que anotações influan na lógica do
+	 * sistema é a coisa certa à fazer. 
+	 * 
+	 * Por exemplo: se um campo deste objeto é Field, isso é metadata.
+	 * Porém, se um campo é publico, ele é publico e fim-de-papo. Metadados não 
+	 * podem influir nisto por exemplo.
+	 * 
+	 * @Field
+	 */
 	public $id;
 	
 	private $config = array(
@@ -11,7 +24,7 @@ abstract class Model{
 	
 	/* -------------------------------------------------------------------- */
 	
-	/*
+	/**
 	 * Estes métodos definem qual sql será executada atravéz dos métodos como 
 	 * load() e loadAll()
 	 */
