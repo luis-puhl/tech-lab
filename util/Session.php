@@ -36,7 +36,7 @@ abstract class Session {
 		if ( isset( $_SESSION["type"] ) ) {
 			$storedType = $_SESSION["type"];
 		} else {
-			$storedType = $customSession->authenticate();
+			$storedType = $customSession->authenticate( $type );
 		}
 		
 		/*
