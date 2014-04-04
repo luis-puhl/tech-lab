@@ -16,6 +16,22 @@ $databaseServerBind = array(
 	),
 );
 
+class Config {
+	const WEB_DIRECTORY = "tech-lab/";
+	const ERROR_PAGE_401 = "401.php";
+	
+	static public function exceptionHandller ( $exception ) {
+		switch ( $exception->getCode() ) {
+			case 401:
+				include( APP . self::ERROR_PAGE_401 );
+			break;
+			default:
+				echo "Uncaught exception: " , $exception->getMessage(), "\n";
+			break;
+		}
+	}
+}
+
 /*
  * config.php
  * 

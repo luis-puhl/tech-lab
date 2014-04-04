@@ -1,7 +1,6 @@
 <?php
 
 define( "ROOT", dirname(__FILE__) . "/" );
-define( "WEB_ROOT", "/" );
 
 // bibliotecas, pouca modificação com o tempo
 define( "LIB", ROOT . "lib/" );
@@ -9,10 +8,10 @@ define( "LIB", ROOT . "lib/" );
 // este framework
 define( "UTIL", ROOT . "util/" );
 define( "ANNOTATION", UTIL . "annotation/" );
-define( "IMG", ROOT . "images/" );
-define( "ERROR_PAGE_403", UTIL . "403.php" );
+define( "ERROR_PAGE_401", UTIL . "401.php" );
 
 // coisas que devem ser alteradas com mais frequencia
+define( "APP", ROOT . "app/" );
 define( "MODEL", ROOT . "model/" );
 define( "TEST", ROOT . "util/" );
 
@@ -21,8 +20,12 @@ define( "TEST", ROOT . "util/" );
 include_once( LIB . "addendum/annotations.php" );
 
 // carrega configurações
-include_once( UTIL . "config.php" );
+include_once( APP . "config.php" );
 
+define( "WEB_ROOT", getAppURL() );
+define( "IMG", WEB_ROOT . "images/" );
+
+set_exception_handler( "Config::exceptionHandller" );
 
 function __autoload($className) {
 	
@@ -31,6 +34,10 @@ function __autoload($className) {
 	switch (true) {
 		case file_exists( ROOT . $file ): {
 			include_once( ROOT . $file );
+			break;
+		}
+		case file_exists( APP . $file ): {
+			include_once( APP . $file );
 			break;
 		}
 		case file_exists( LIB . $file ): {
@@ -60,6 +67,32 @@ function __autoload($className) {
 	
 	return true;
 }
+
+function getServerHTTP() {
+	$serverHttp = 'http';
+	if ( isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
+		$serverHttp .= "s";
+	}
+	
+	$serverHttp .= "://";
+	$serverHttp .= $_SERVER["HTTP_HOST"];
+	
+	if ($_SERVER["SERVER_PORT"] != "80") {
+		$serverHttp .= ":" . $_SERVER["SERVER_PORT"];
+	}
+	return $serverHttp;
+}
+function curPageURL() {
+	$pageURL = getServerHTTP();
+	$pageURL .= $_SERVER["REQUEST_URI"];
+	return $pageURL;
+}
+function getAppURL() {
+	$appUrl = getServerHTTP() . "/" . Config::WEB_DIRECTORY;
+	return $appUrl;
+}
+
+
 
 
 header("Content-Type: text/html; charset=utf-8");

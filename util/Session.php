@@ -10,25 +10,40 @@ abstract class Session {
 	const ADMINISTRATOR = 2;
 	
 	private $type;
+	private static $session = null;
 	
-	function __contruct( $type = VISITOR ){
-		session_start();
+	public function __construct( $type = self::VISITOR ){
+		if ( !session_id() ){
+			session_start();
+		}
+		
 		// recupera dados da secao
-		$storedType = self::VISITOR;
-		if ( isset( $_SESSION["type"] ) {
+		//~ $storedType = self::VISITOR;
+		
+		if ( isset( $_SESSION["type"] ) ) {
 			$storedType = $_SESSION["type"];
 		} else {
 			$storedType = $this->authenticate();
 		}
 		
 		if ( $storedType < $type ) {
-			header($_SERVER["SERVER_PROTOCOL"]." 403 Forbidden");
-			include_once( ERROR_PAGE_403 );
+			throw new Exception( 
+					$_SERVER["SERVER_PROTOCOL"]." 401 Unauthorized",
+					401);
 		}
+		if ( $storedType > $type ) {
+			$type = $storedType;
+		}
+		
 		$this->type = $type;
+		$_SESSION["type"] = $type;
 	}
 	
-	function getType(){
+	public function __destroy(){
+		session_destroy();
+	}
+	
+	public function getType(){
 		return $this->type;
 	}
 	
