@@ -1,5 +1,17 @@
 <?php
 
+class httpError401 extends Exception {
+	public function __construct( $message = "",
+			$code = 401,
+			Exception $previous = NULL)
+	{
+		if ( $message == "" ){
+			$message = $_SERVER["SERVER_PROTOCOL"]." 401 Unauthorized";
+		}
+		parent::__construct( $message, $code, $previous );
+	} 
+}
+
 abstract class Session {
 	
 	/**
@@ -9,42 +21,52 @@ abstract class Session {
 	const USER = 1;
 	const ADMINISTRATOR = 2;
 	
-	private $type;
-	private static $session = null;
+	private static $type;
 	
-	public function __construct( $type = self::VISITOR ){
+	public static function start( Session $customSession, $type = self::VISITOR ){
+		
+		// se não tem sessão, cria uma
 		if ( !session_id() ){
 			session_start();
-		}
+		} 
 		
-		// recupera dados da secao
-		//~ $storedType = self::VISITOR;
-		
+		/*
+		 * Recupera o tipo de sessao, pela sessao em si ou por autenticação
+		 */
 		if ( isset( $_SESSION["type"] ) ) {
 			$storedType = $_SESSION["type"];
 		} else {
-			$storedType = $this->authenticate();
+			$storedType = $customSession->authenticate();
 		}
 		
+		/*
+		 * Se na tentativa de acessar uma página, a autorização do 
+		 * requisitante ($storedType) for menor que a autorização solicitada
+		 * pela página ($type), gera um erro 401, não autorizado.
+		 */
 		if ( $storedType < $type ) {
-			throw new Exception( 
-					$_SERVER["SERVER_PROTOCOL"]." 401 Unauthorized",
-					401);
+			throw new httpError401( );
 		}
+		
+		/*
+		 * Se o usuario da sessao atual recebeu autorização maior, usa a maior.
+		 */
 		if ( $storedType > $type ) {
 			$type = $storedType;
 		}
 		
-		$this->type = $type;
+		self::$type = $type;
 		$_SESSION["type"] = $type;
+		
+		return $type;
 	}
 	
-	public function __destroy(){
+	public static function destroy ( ) {
 		session_destroy();
 	}
 	
-	public function getType(){
-		return $this->type;
+	public static function getType(){
+		return self::$type;
 	}
 	
 	/**
@@ -52,6 +74,6 @@ abstract class Session {
 	 * 
 	 * @return int {VISITOR, USER, ADMINISTRATOR}
 	 */
-	abstract function authenticate ();
+	public abstract function authenticate ();
 	
 }
