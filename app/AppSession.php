@@ -6,8 +6,12 @@ class AppSession extends Session {
 		self::start( $this, $type );
 	}
 	
-	public function authenticate (){
-		return self::USER;
+	public function authenticate ( $type ){
+		/*
+		 * Usa o tipo para ?
+		 */
+		
+		return self::VISITOR;
 	}
 	
 }

@@ -74,6 +74,6 @@ abstract class Session {
 	 * 
 	 * @return int {VISITOR, USER, ADMINISTRATOR}
 	 */
-	public abstract function authenticate ();
+	public abstract function authenticate ( $type );
 	
 }
