@@ -77,3 +77,14 @@ Removido os pontos de depuração (echo) do script Model.php;
 Adicionado índice (index.php) para acesso rápido das páginas de teste;
 
 Adicionado página person mostrando o modelo de uma pagina associado a um Model;
+
+08.04.2014 14:51:40
+==============================================================================
+Adicionado folha de estilos 'main';
+
+Adicionado funções getCss e getJs para o boot.php, que geram o html de 
+ligação para Folha de Estilo e Script de Browser respectivamente;
+
+Melhorado a padronização de código e reparado alguns erros lógicos (veja diff);
+
+Adicionado serviço ajax com composição de pagina de listagem (melhorar);

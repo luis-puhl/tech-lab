@@ -8,6 +8,8 @@ class Person extends Model {
 	public $name;
 	/** @Field */
 	public $name_last;
+	/** @Field */
+	public $regUpdateTime;
 	
 	
 	public $table;
@@ -18,7 +20,8 @@ class Person extends Model {
 SELECT
 	`person`.`id`,
 	`person`.`name`,
-	`person`.`name_last`
+	`person`.`name_last`,
+	NOW() AS regUpdateTime
 FROM 
 	`test`.`person`
 

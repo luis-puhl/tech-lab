@@ -31,12 +31,6 @@ define( "PAGES", ROOT . "pages/" );
  * Trechos HTML usadas para compor as paginas;
  */
 define( "HELPER", ROOT . "helper/" );
-/**
- * Diretório de estilos e de scrips ECMA (JavaScript);
- */
-define( "CSS", ROOT . "css/" );
-define( "JS", ROOT . "js/" );
-
 
 // A MAGNÍFICA BIBLIOTECA DE ANOTAÇÕES
 include_once( LIB . "addendum/annotations.php" );
@@ -44,8 +38,16 @@ include_once( LIB . "addendum/annotations.php" );
 // carrega configurações
 include_once( APP . "config.php" );
 
+/**
+ * Define a URL dos conteúdos:
+ * 		Imagens (images)
+ * 		Folha de Estilos (css)
+ * 		Scripts de Browser (js)
+ */
 define( "WEB_ROOT", getAppURL() );
 define( "IMG", WEB_ROOT . "images/" );
+define( "CSS", WEB_ROOT . "css/" );
+define( "JS", WEB_ROOT . "js/" );
 
 set_exception_handler( "Config::exceptionHandller" );
 
@@ -115,6 +117,16 @@ function getAppURL() {
 }
 
 
+function getCss ( $sheetName ) {
+	$URL = CSS . $sheetName . ".css";
+	$html = "\t<link rel='stylesheet' type='text/css' href='" . $URL . "' />\n";
+	echo $html;
+}
+function getJs ( $scriptName ) {
+	$URL = JS . $scriptName . ".js";
+	$html = "\t<script type='text/javascript' src='" . $URL . "'></script>\n";
+	echo $html;
+}
 
 
 header("Content-Type: text/html; charset=utf-8");

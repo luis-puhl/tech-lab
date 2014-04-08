@@ -20,7 +20,7 @@ class Config {
 	const WEB_DIRECTORY = "tech-lab/";
 	const ERROR_PAGE_401 = "401.php";
 	
-	static public function exceptionHandller ( $exception ) {
+	public static function exceptionHandller ( $exception ) {
 		switch ( $exception->getCode() ) {
 			case 401:
 				include( APP . self::ERROR_PAGE_401 );
@@ -30,6 +30,7 @@ class Config {
 			break;
 		}
 	}
+	
 }
 
 /*
