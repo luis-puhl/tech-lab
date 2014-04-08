@@ -60,5 +60,20 @@ Modificado o campo e-mail da licesa em cada arquivo;
 ==============================================================================
 Adicionado config.php, para centralizar a configuração de conexão com o banco;
 
+08.04.2014 13:40:52 
+==============================================================================
+Adicionados os diretórios:
+	pages/		Paginas e módulos;
+	helper/		Trechos para reuso de html;
+	css/		Folhas de estilo;
+	js/			Sripts de navegador (JavaScript).
+Modificado o boot.php para incluir estes diretórios;
 
+Modificado MysqlConnection.php para lançar excessão se nenhum registro é 
+recuperado;
 
+Removido os pontos de depuração (echo) do script Model.php;
+
+Adicionado índice (index.php) para acesso rápido das páginas de teste;
+
+Adicionado página person mostrando o modelo de uma pagina associado a um Model;

@@ -97,7 +97,7 @@ abstract class Model{
 		$sql .= $this->getWhere( $SQLparams );
 		
 		$param = array( "Pid" => $this->id );
-		echo "<br>\nsql" . $sql . "\n<br>";
+		//~ echo "<br>\nsql" . $sql . "\n<br>";
 		
 		$stm = $pdo->pdoPrepareExecute( $sql, $param );
 		
@@ -128,7 +128,7 @@ abstract class Model{
 		$sql = $this->getSelectShortSQL( $SQLparams );
 		$sql .= ";";
 		$param = array(  );
-		echo "<br>\nsql" . $sql . "\n<br>";
+		//~ echo "<br>\nsql" . $sql . "\n<br>";
 		
 		$query = $pdo->prepare( $sql );
 		

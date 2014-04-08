@@ -132,6 +132,10 @@ class MysqlConnection{
 			$msg .= $this->pdo->errorInfo();
 			throw new PDOException( $msg );
 		}
+		if ($query->rowCount() <= 0) {
+			$msg = "Nenhum registro foi recuperado.";
+			throw new PDOException( $msg );
+		}
 		
 		return $query;
 	}

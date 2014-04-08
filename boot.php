@@ -11,9 +11,31 @@ define( "ANNOTATION", UTIL . "annotation/" );
 define( "ERROR_PAGE_401", UTIL . "401.php" );
 
 // coisas que devem ser alteradas com mais frequencia
+/**
+ * Caminho das configurações (personalização) do aplicativo;
+ */
 define( "APP", ROOT . "app/" );
+/**
+ * Modelos do banco de dados;
+ */
 define( "MODEL", ROOT . "model/" );
+/**
+ * Scritps para teste;
+ */
 define( "TEST", ROOT . "util/" );
+/**
+ * Paginas agrupadas em módulos (HTML);
+ */
+define( "PAGES", ROOT . "pages/" );
+/**
+ * Trechos HTML usadas para compor as paginas;
+ */
+define( "HELPER", ROOT . "helper/" );
+/**
+ * Diretório de estilos e de scrips ECMA (JavaScript);
+ */
+define( "CSS", ROOT . "css/" );
+define( "JS", ROOT . "js/" );
 
 
 // A MAGNÍFICA BIBLIOTECA DE ANOTAÇÕES
