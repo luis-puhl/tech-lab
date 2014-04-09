@@ -129,6 +129,26 @@ function getJs ( $scriptName ) {
 }
 
 
+function getHTTPHeaderByCode( $code ){
+	$header = $_SERVER["SERVER_PROTOCOL"];
+	switch ( $code ) {
+		case 401:
+			$header .= " 401 Unauthorized";
+		break;
+		case 403:
+			$header .= " 403 Forbidden";
+		break;
+		case 404:
+			$header .= " 404 Not Found";
+		break;
+		default :
+			$header .= " 500 Internal Server Error";
+		break;
+	}
+	
+	return $header;
+}
+
 header("Content-Type: text/html; charset=utf-8");
 
 /*

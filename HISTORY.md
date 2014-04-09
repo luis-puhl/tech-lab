@@ -88,3 +88,21 @@ ligação para Folha de Estilo e Script de Browser respectivamente;
 Melhorado a padronização de código e reparado alguns erros lógicos (veja diff);
 
 Adicionado serviço ajax com composição de pagina de listagem (melhorar);
+
+09.04.2014 16:42:13 
+==============================================================================
+Adiconado Exception personalizada para controller, apenas para recuperar 
+erros no cotroller;
+
+Melhorado person.php para tratar melhor excessões (de acordo com o item 
+anterior), modificado os scripts abaixo para acompanhar esta alteração:
+	person_compact.php;
+	person_full.php;
+
+Melhorado o browser script ajax.js, testado em person_list.php;
+
+Adicionado função getHTTPHeaderByCode que retorna um cabeçalho HTTP 
+formatado de acordo com o status da resposta HTTP;
+
+
+

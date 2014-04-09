@@ -64,6 +64,11 @@
 				$finalHtml = str_replace( ":Pname", $reg->name, $finalHtml );
 				echo $finalHtml;
 			}
+			
+			$finalHtml = str_replace( ":Pid", "0", $html );
+			$finalHtml = str_replace( ":Pname", "n", $finalHtml );
+			echo $finalHtml;
+			
 			?>
 			
 		</tbody>

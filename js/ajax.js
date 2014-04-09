@@ -11,18 +11,26 @@ function loadResourceCompact( URL, id, DOMTarget, extraData ){
 		type: "GET",
 		// the type of data we expect back
 		dataType : "html",
-		success: function( html ) {
+		success: function loadResourceCompactSucess ( html ) {
 			
-			$( DOMTarget ).siblings().remove();
-			$( DOMTarget ).after( html );
+			traget = $( DOMTarget );
+			traget.siblings().remove();
+			traget.after( html );
 			
 		},
-		error: function( xhr, status ) {
-			$( DOMTarget ).after( "Sorry, there was a problem!" );
+		error: function loadResourceCompactError ( xhr, status ) {
+			
+			var msg = "Sorry, there was a problem!";
+			traget = $( DOMTarget );
+			traget.siblings().remove();
+			traget.after( msg );
+			
 		},
 		// code to run regardless of success or failure
-		complete: function( xhr, status ) {
+		complete: function loadResourceCompactComplete ( xhr, status ) {
+			
 			$( "img#loaderGIF_"+id ).hide();
+			
 		}
 	};
 	

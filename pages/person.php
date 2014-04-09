@@ -17,7 +17,7 @@ $pageContent = array(
 	"Title" => "Person",
 	"Subtitle" => "Nenhum Id especificado",
 	"Record" => new Person(),
-	"Error" => "",
+	"Error" => null,
 );
 
 if ( isset( $id ) ){
@@ -27,7 +27,12 @@ if ( isset( $id ) ){
 	try {
 		$person->load();
 	} catch (PDOException $e){
-		$pageContent["Error"] = $e->getMessage() . " (id: " . $id . ")";
+		/**
+		 * Se não consegue carregar um registro específico, 
+		 * O erro é do cliente (400+ -> 404)
+		 */
+		$msg = $e->getMessage() . " (id: " . $id . ")";
+		$pageContent["Error"] = new ControllerException( $msg, 404, $e );
 	}
 	
 	$fullName = $person->name . " " . $person->name_last;
@@ -39,7 +44,12 @@ if ( isset( $id ) ){
 	try {
 		$pageContent["Records"] = $person->loadAll();
 	} catch (PDOException $e){
-		$pageContent["Error"] = $e->getMessage() . " (id: " . $id . ")";
+		/**
+		 * Se não consegue carregar nenhum quando tenta todos
+		 * O erro é interno (500+)
+		 */
+		$msg = $e->getMessage() . " (id: " . $id . ")";
+		$pageContent["Error"] = new ControllerException( $msg, 500, $e );
 	}
 	
 	$pageContent["Subtitle"] = "Listagem";
