@@ -104,5 +104,18 @@ Melhorado o browser script ajax.js, testado em person_list.php;
 Adicionado função getHTTPHeaderByCode que retorna um cabeçalho HTTP 
 formatado de acordo com o status da resposta HTTP;
 
+10.04.2014 14:21:26
+==============================================================================
+Melhorado o layout de erro ajax;
+
+Adiconado a função 'getPageURL' para recuperar URL de páginas (verifica se a 
+página existe);
+
+Corrigido bug de acessibilidade com o JavaScript desabilitado;
+
+Criado função JavaScript para enviar formulários, com isso, criado mecanismo 
+de envio de ações a partir de AJAX;
+
+Codigo JavaScript de envio AJAX para person foi extraido e melhorado;
 
 

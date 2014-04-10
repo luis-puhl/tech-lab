@@ -1,6 +1,9 @@
 .error {
 	color: red;
 }
+.smallError {
+	color: #D45454;
+}
 
 th, td {
 	padding-right: 1em;

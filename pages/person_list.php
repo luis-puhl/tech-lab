@@ -11,6 +11,7 @@
 	getCss( "main" );
 	getJs( "jquery" );
 	getJs( "ajax" );
+	getJs( "person" );
 	?>
 	
 </head>
@@ -29,42 +30,39 @@
 				<th>Name</th>
 				<th>Last Name</th>
 				<th>Time Check</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php
 			
-			$registros = $pageContent["Records"];
-			
+			// cria um modelo do que mostrar
 			$html = "
 			<tr>
 				<td id='reg_:Pid'>
-					:Pid
+					<a href=':Purl?id=:Pid'>
+						:Pid
+					</a>
 					<button onclick='load:Pid()'>Reload</button>
 				</td>
 				<td class='placeHolder'>
 					:Pname
 					<script>
-						function load:Pid(){
-							var URL = 'person.php';
-							var id = :Pid;
-							var DOMTarget = 'td#reg_:Pid';
-							var extraData = [];
-							loadResourceCompact( URL, id, DOMTarget, extraData );
-						}
-						
-						$(document).ready( load:Pid() );
+						$(document).ready( function(){ return load( :Pid ); } );
 					</script>
 				</td>
 			</tr>
 			";
+			$html = str_replace( ":Purl", getPageURL( 'person' ), $html );
 			
-			foreach ( $registros as $reg ) {
+			// para cada registro, substitui os dados no modelo e mostra;
+			foreach ( $pageContent["Records"] as $reg ) {
 				$finalHtml = str_replace( ":Pid", $reg->id, $html );
 				$finalHtml = str_replace( ":Pname", $reg->name, $finalHtml );
 				echo $finalHtml;
 			}
 			
+			// gera um erro, propositalmete para demostrar estabilidade
 			$finalHtml = str_replace( ":Pid", "0", $html );
 			$finalHtml = str_replace( ":Pname", "n", $finalHtml );
 			echo $finalHtml;

@@ -1,5 +1,7 @@
 
-function loadResourceCompact( URL, id, DOMTarget, extraData ){
+function loadResourceCompact
+	( URL, id, DOMTarget, extraData, errorMessage, sucessCallback ){
+	
 	console.log("requesting " + URL + ":" + id );
 	
 	var ajaxRequestMaker = {
@@ -17,10 +19,12 @@ function loadResourceCompact( URL, id, DOMTarget, extraData ){
 			traget.siblings().remove();
 			traget.after( html );
 			
+			sucessCallback();
+			
 		},
 		error: function loadResourceCompactError ( xhr, status ) {
 			
-			var msg = "Sorry, there was a problem!";
+			var msg = "<p class='smallError'>" + errorMessage + "</p>";
 			traget = $( DOMTarget );
 			traget.siblings().remove();
 			traget.after( msg );
@@ -29,8 +33,6 @@ function loadResourceCompact( URL, id, DOMTarget, extraData ){
 		// code to run regardless of success or failure
 		complete: function loadResourceCompactComplete ( xhr, status ) {
 			
-			$( "img#loaderGIF_"+id ).hide();
-			
 		}
 	};
 	
@@ -38,6 +40,34 @@ function loadResourceCompact( URL, id, DOMTarget, extraData ){
 	for (var i in extraData) {
 		ajaxRequestMaker.data[i] = extraData[i];
 	}
+	
+	$.ajax( ajaxRequestMaker );
+	
+}
+
+
+
+function formAjax ( action, method, name, dataJson, suceesCallback ){
+	
+	console.log("sending form " + action + ":" + name );
+	
+	var ajaxRequestMaker = {
+		url: action,
+		data: dataJson,
+		type: method,
+		// the type of data we expect back
+		dataType : "text",
+		success: function formAjaxSucess ( html ) {
+			suceesCallback();
+		},
+		error: function formAjaxError ( xhr, status ) {
+			
+		},
+		// code to run regardless of success or failure
+		complete: function formAjaxComplete ( xhr, status ) {
+			
+		}
+	};
 	
 	$.ajax( ajaxRequestMaker );
 	

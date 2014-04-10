@@ -149,6 +149,16 @@ function getHTTPHeaderByCode( $code ){
 	return $header;
 }
 
+function getPageURL( $page ){
+	$file = PAGES . $page . ".php";
+	
+	if ( file_exists( $file ) ) {
+		return WEB_ROOT . "pages/" . $page . ".php";
+	}
+	
+	return "." . $page;
+}
+
 header("Content-Type: text/html; charset=utf-8");
 
 /*
