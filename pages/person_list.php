@@ -43,7 +43,7 @@
 					<a href=':Purl?id=:Pid'>
 						:Pid
 					</a>
-					<button onclick='load:Pid()'>Reload</button>
+					<button onclick='load( :Pid )'>Reload</button>
 				</td>
 				<td class='placeHolder'>
 					:Pname
