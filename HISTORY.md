@@ -118,4 +118,6 @@ de envio de ações a partir de AJAX;
 
 Codigo JavaScript de envio AJAX para person foi extraido e melhorado;
 
-
+11.04.2014 17:22:32
+==============================================================================
+Criado paginação de registros, melhorar;
