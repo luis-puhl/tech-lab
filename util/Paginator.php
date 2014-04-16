@@ -29,7 +29,7 @@ abstract class Paginator {
 			load( :Pid );"
 	;
 	
-	const ITENS_POR_PAGINA = 5;
+	const ITENS_POR_PAGINA = Config::ITEMS_PER_PAGE;
 	
 	protected $jsPageArray = "";
 	protected $pageloadButtons = array();

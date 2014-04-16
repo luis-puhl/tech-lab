@@ -19,6 +19,7 @@ $databaseServerBind = array(
 class Config {
 	const WEB_DIRECTORY = "tech-lab/";
 	const ERROR_PAGE_401 = "401.php";
+	const ITEMS_PER_PAGE = 10;
 	
 	public static function exceptionHandller ( $exception ) {
 		switch ( $exception->getCode() ) {

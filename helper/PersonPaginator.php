@@ -1,6 +1,6 @@
 <?php
 
-class PersonPaginator extends Paginator{
+class PersonPaginator extends Paginator {
 	
 	private $pageContent;
 	
@@ -110,6 +110,10 @@ class PersonPaginator extends Paginator{
 		}
 		
 		return $ret;
+	}
+	
+	function getJs(){
+		
 	}
 	
 }

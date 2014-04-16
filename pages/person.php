@@ -6,11 +6,6 @@ if ( file_exists( "../boot.php" ) ){
 // valida o acesso à página
 $sessao = new AppSession( Session::VISITOR );
 
-if ( Cache::getUpdateTime( "test", "person" ) > 3600 ){
-	header( "Cache-Control: private, must-revalidate", true );
-	header( "Pragma: private", true );
-}
-
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $accept = filter_input(INPUT_GET, 'get', FILTER_SANITIZE_STRING);
 
