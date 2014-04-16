@@ -1,10 +1,20 @@
+/**
+ * 
+ * 
+ */
+
+function loadForeachWay( element, index, array ){
+	load( element );
+}
 
 function load( id, url ){
 	var DOMTarget = "td#reg_" + id;
 	var extraData = [];
 	var errorMessage = "Sorry, there was a problem!";
 	
-	var callback = function (){
+	$( "tr#reg_" + id ).show();
+	
+	var callback = function loadCallback(){
 		return success( id, url );
 	}
 	
@@ -12,9 +22,12 @@ function load( id, url ){
 		errorMessage, callback );
 }
 
+/**
+ * Funções para interceptar os formulários das páginas carregadas por AJAX
+ */
 function success( id, url ) {
 	
-	var callback = function (){
+	var callback = function successCallback(){
 		return formIntercepter( id, url );
 	}
 	
@@ -33,7 +46,7 @@ function formIntercepter( id, url ) {
 	var action = form.attr("action");
 	var name = form.attr("id");
 	
-	var callback = function (){
+	var callback = function formIntercepterCallback(){
 		return load( id, url );
 	}
 	
@@ -41,4 +54,20 @@ function formIntercepter( id, url ) {
 	
 	// Important. Stop the normal POST
 	return false;
+}
+
+
+
+function hideUnloaded(){
+	$( "tr.unload" ).hide();
+}
+
+var page = new Array();
+lastPageLoad = 0;
+function more(){
+	page[lastPageLoad].forEach( loadForeachWay );
+	lastPageLoad++;
+}
+function loadPage( i ){
+	page[ i ].forEach( loadForeachWay );
 }

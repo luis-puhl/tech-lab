@@ -126,7 +126,7 @@ class MysqlConnection{
 			$debug->log( $query );
 		}
 		
-		if ($sucess != true) {
+		if ($sucess === false) {
 			$msg = "Não foi possivel consultar o banco de dados.";
 			$msg .= " (" . $this->pdo->errorCode() . ") ";
 			$msg .= $this->pdo->errorInfo();

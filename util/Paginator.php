@@ -8,37 +8,40 @@ abstract class Paginator {
 	abstract function getRawRow();
 	
 	/**
-	 * Co-rotina => generator;
 	 * Recheia uma linha
 	 */
 	abstract function fillRow();
 	
 	const AUTOCALL = "
 	<script>
-		$(document).ready( function(){ 
-			:PscriptCall
+		$(document).ready( function autoLoadCall(){ 
+			hideUnloaded();
+			more();
 		} );
 	</script>
 	";
 	const PAGE_BUTTON = "
-	<button onclick='javascript::PscriptCall'>
+	<button onclick='javascript:loadPage(:Ppage);'>
 		:Ppage
 	</button>
 	";
 	const JAVASCRIPT_CALL = "
-			load( :Pid );";
+			load( :Pid );"
+	;
 	
 	const ITENS_POR_PAGINA = 5;
 	
-	
-	protected $firstPageAutoload = "";
+	protected $jsPageArray = "";
 	protected $pageloadButtons = array();
 	
 	public function getPageloadButtons(){
 		return implode( $this->pageloadButtons );
 	}
 	public function getFirstPageAutoload(){
-		return $this->firstPageAutoload;
+		return self::AUTOCALL;
+	}
+	public function getPageloadArray(){
+		return "<script>" . $this->jsPageArray . "</script>";
 	}
 	
 }

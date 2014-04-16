@@ -80,6 +80,10 @@ function __autoload($className) {
 			include_once( MODEL . $file );
 			break;
 		}
+		case file_exists( HELPER . $file ): {
+			include_once( HELPER . $file );
+			break;
+		}
 		case file_exists( TEST . $file ): {
 			include_once( TEST . $file );
 			break;
